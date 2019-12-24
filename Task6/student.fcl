@@ -1,0 +1,74 @@
+FUNCTION_BLOCK student
+
+
+VAR_INPUT
+	sleepTime: REAL;
+	performance: REAL;
+	luck: REAL;
+	purpose: REAL;
+END_VAR
+
+VAR_OUTPUT
+	grade: REAL;
+	knowledge: REAL;
+END_VAR
+
+
+FUZZIFY sleepTime
+	TERM small := (0, 1) (6, 0);
+	TERM normal := (4.5, 0) (7, 1) (9, 0);
+	TERM big := (8, 0) (10, 1);
+END_FUZZIFY
+
+FUZZIFY performance
+	TERM bad := (2, 1) (3.5, 0);
+	TERM good := (3, 0) (4, 1) (5, 0);
+	TERM excellent := (4, 0) (5, 1);
+END_FUZZIFY
+
+FUZZIFY luck
+	TERM notlucky := (0, 1) (40, 0);
+	TERM lucky := (25, 0) (50, 1) (70, 1) (80, 0);
+	TERM verylucky := (70, 0) (100, 1);
+END_FUZZIFY
+
+FUZZIFY purpose
+	TERM small := (0, 1) (40, 0);
+	TERM normal := (20, 0) (30, 1) (70, 1) (90, 0);
+	TERM big := (75, 0) (100, 1);
+END_FUZZIFY
+
+
+DEFUZZIFY grade
+	TERM bad := (2, 1) (3.5, 0); 
+	TERM good := (2.5, 0) (4, 1) (5, 0);
+	TERM excellent := (4, 0) (5, 1);
+	METHOD: COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
+DEFUZZIFY knowledge
+	TERM zero := (0, 1) (60, 0);
+	TERM soso := (50, 0) (70, 1) (90, 0);
+	TERM satisfactory := (80, 0) (100, 1);
+	METHOD: COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
+
+RULEBLOCK kekobllock
+	AND: MIN;
+	ACT: MIN;
+	ACCU: MAX;
+	
+	RULE 1: IF (sleepTime IS small) AND (performance IS bad) AND (purpose IS small) OR (luck IS notlucky) THEN grade IS bad;
+	RULE 2: IF (sleepTime IS normal) AND (performance IS good) AND (purpose IS normal) OR (luck IS lucky) THEN grade IS good;
+	RULE 3: IF (sleepTime IS big) AND (performance IS excellent) AND (purpose IS big) OR (luck IS verylucky) THEN grade IS excellent;
+	
+	RULE 4: IF (sleepTime IS small) THEN knowledge IS zero;
+	RULE 5: IF (sleepTime IS normal) THEN knowledge IS soso;
+	RULE 6: IF (sleepTime IS big) THEN knowledge IS satisfactory;
+END_RULEBLOCK
+
+
+END_FUNCTION_BLOCK
