@@ -1,2 +1,28 @@
 # KubSU-neural-networks
-My homework on the subject of neural networks
+My homework по Нейронным сетям
+
+## Tasks
+
+### Task_#1
+
+#### Распознавание лиц с помощью каскадов Хаара
+
+### Task_#2
+
+#### Однослойный персептрон
+
+### Task_#3
+
+#### Достоинства и недостатки нейронных сетей
+
+### Task_#4
+
+#### Грубокое обучение с помощью Deep Learning Studio на MNIST
+
+### Task_#5
+
+#### Грубокое обучение с помощью Deep Learning Studio на своих данных
+
+### Task_#6
+
+#### Нечёткая логика на java + fcl
